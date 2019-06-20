@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
+{{-- {{ dd($equipments) }} --}}
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="p-4 bg-white shadow-sm">
 				@if (session('status'))
-					<div class="alert alert-success" role="alert">
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						{{ session('status') }}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
 				@endif
 				
@@ -26,24 +31,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						@foreach ($equipments as $item)
 						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
+							<th scope="row">{{ $item->id }}</th>
+							<td>{{ $item->name }}</td>
+							<td>{{ $item->description }}</td>
 							<td>@mdo</td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@mdo</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>JLarry</td>
-							<td>the Bird</td>
-							<td>@mdo</td>
-						</tr>
+						@endforeach
 					</tbody>
 				</table>
             </div>

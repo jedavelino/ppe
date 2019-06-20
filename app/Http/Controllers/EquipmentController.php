@@ -15,7 +15,9 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        return view('equipment.index');
+        $equipments = Equipment::all();
+
+        return view('equipment.index')->with('equipments', $equipments);
     }
 
     /**
@@ -41,7 +43,7 @@ class EquipmentController extends Controller
         $equipment = Equipment::create($validated);
 
         return redirect()->route('admin.equipments.index')
-            ->withStatus("Equipment successfully created!");
+            ->withStatus("Equipment successfully added!");
     }
 
     /**
