@@ -21,5 +21,6 @@ Route::middleware('auth')->group(function() {
     Route::name('admin.')->group(function() {
         Route::get('/', 'HomeController@index')->name('home');
         Route::get('/equipments', 'EquipmentController@index')->name('equipments');
+        Route::get('/equipments/create', 'EquipmentController@create')->name('equipments.create');
     });
 });
