@@ -15,8 +15,8 @@
 					<li class="nav-item {{ Route::is('admin.home') ? 'active' : '' }}">
 						<a class="nav-link" href="{{ route('admin.home') }}">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item {{ Route::is('admin.equipments') ? 'active' : '' }}">
-						<a class="nav-link" href="{{ route('admin.equipments') }}">Equipments</a>
+					<li class="nav-item {{ strpos(Route::currentRouteName(), 'admin.equipments') === 0 ? 'active' : '' }}">
+						<a class="nav-link" href="{{ route('admin.equipments.index') }}">Equipments</a>
 					</li>
 				</ul>
 				@endauth

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Equipment;
+use App\Http\Requests\StoreEquipmentRequest;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
@@ -32,9 +34,14 @@ class EquipmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEquipmentRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $equipment = Equipment::create($validated);
+
+        return redirect()->route('admin.equipments.index')
+            ->withStatus("Equipment successfully created!");
     }
 
     /**
