@@ -36,7 +36,11 @@
 							<th scope="row">{{ $item->id }}</th>
 							<td>{{ $item->name }}</td>
 							<td>{{ $item->description }}</td>
-							<td>@mdo</td>
+							<td>
+								<a class="btn btn-sm btn-success" href="{{ route('admin.equipments.edit', $item->id) }}">
+									Edit
+								</a>
+							</td>
 						</tr>
 						@endforeach
 					</tbody>

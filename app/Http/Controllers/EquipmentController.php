@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Equipment;
 use App\Http\Requests\StoreEquipmentRequest;
+use App\Http\Requests\UpdateEquipmentRequest;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
@@ -65,7 +66,9 @@ class EquipmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Equipment::findOrFail($id);
+
+        return view('equipment.edit')->with('book', $book);
     }
 
     /**
@@ -75,9 +78,13 @@ class EquipmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEquipmentRequest $request, $id)
     {
-        //
+        // $validated = $request->validated();
+
+        $book = Equipment::where('id', $id)->update($request->validated());
+        
+        return redirect()->route('admin.equipments.index')->withStatus("Equipment successfully updated!");
     }
 
     /**
