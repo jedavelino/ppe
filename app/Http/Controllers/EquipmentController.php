@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
 {
+    protected $itemsPerPage = 15;
+
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +30,8 @@ class EquipmentController extends Controller
 
         // $equipments = Equipment::paginate(15);
 
-        // return view('equipment.index')->with('equipments', $equipments);
         return view('equipment.index', [
-            "equipments" => $equipmentsQuery->paginate(15),
+            "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
         ]);
     }
 
@@ -70,7 +71,7 @@ class EquipmentController extends Controller
     {
         $equipment = Equipment::findOrFail($id);
 
-        return view('equipment.show')->with('equipment', $equipment);
+        return view('equipment.show', ["equipment" => $equipment]);
     }
 
     /**
@@ -105,10 +106,11 @@ class EquipmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
     }

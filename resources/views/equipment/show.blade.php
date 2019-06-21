@@ -23,7 +23,7 @@
 						</div>
 					</div>
 					<div class="form-group d-flex justify-content-end">
-						<a href="{{ route('admin.equipments.index') }}" class="btn btn-secondary">
+						<a href="{{ url()->previous() }}" class="btn btn-secondary">
 							Back
 						</a>
 					</div>
