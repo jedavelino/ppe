@@ -25,20 +25,20 @@
 					<h3>Edit Equipment</h3>
 				</div>
 
-				<form method="POST" action="{{ route('admin.equipments.update', $book->id) }}" class="mt-4">
+				<form method="POST" action="{{ route('admin.equipments.update', $equipment->id) }}" class="mt-4">
 					@csrf
 					@method('PUT')
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="name">Name</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" name="name" value="{{ $book->name }}">
+							<input type="text" class="form-control" id="name" name="name" value="{{ $equipment->name }}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="description">Description</label>
 						<div class="col-sm-10">
-							<textarea class="form-control" id="description" name="description" rows="4">{{ $book->description }}</textarea>
+							<textarea class="form-control" id="description" name="description" rows="4">{{ $equipment->description }}</textarea>
 						</div>
 					</div>
 					<div class="form-group d-flex justify-content-end">

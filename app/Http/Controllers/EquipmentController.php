@@ -14,11 +14,24 @@ class EquipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $equipments = Equipment::all();
+        $equipmentsQuery = Equipment::query();
 
-        return view('equipment.index')->with('equipments', $equipments);
+        if ($order = $request->order) {
+            $equipmentsQuery->orderBy($order, 'asc');
+        }
+
+        if ($search = $request->search) {
+            $equipmentsQuery->where('name', 'like', "%{$search}%");
+        }
+
+        // $equipments = Equipment::paginate(15);
+
+        // return view('equipment.index')->with('equipments', $equipments);
+        return view('equipment.index', [
+            "equipments" => $equipmentsQuery->paginate(15),
+        ]);
     }
 
     /**
@@ -55,7 +68,9 @@ class EquipmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $equipment = Equipment::findOrFail($id);
+
+        return view('equipment.show')->with('equipment', $equipment);
     }
 
     /**
@@ -66,9 +81,9 @@ class EquipmentController extends Controller
      */
     public function edit($id)
     {
-        $book = Equipment::findOrFail($id);
+        $equipment = Equipment::findOrFail($id);
 
-        return view('equipment.edit')->with('book', $book);
+        return view('equipment.edit')->with('equipment', $equipment);
     }
 
     /**
