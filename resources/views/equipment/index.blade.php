@@ -67,9 +67,13 @@
 								<a class="btn btn-sm btn-success" href="{{ route('admin.equipments.edit', $item->id) }}">
 									Edit
 								</a>
-								<a class="btn btn-sm btn-danger" href="{{ route('admin.equipments.edit', $item->id) }}">
-									Trash
-								</a>
+								<form method="POST" action="{{ route('admin.equipments.trash', $item->id) }}">
+									@csrf
+									@method('DELETE')
+									<button class="btn btn-sm btn-danger">
+										Trash
+									</button>
+								</form>
 							</td>
 						</tr>
 						@endforeach

@@ -114,4 +114,11 @@ class EquipmentController extends Controller
     {
         //
     }
+
+    public function trash(Request $request, $id) {
+        $equipment = Equipment::destroy($id);
+
+        return redirect()->route('admin.equipments.index')
+            ->withStatus("Equipment successfully trashed!");
+    }
 }
