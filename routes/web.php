@@ -25,7 +25,9 @@ Route::middleware('auth')->group(function() {
          * Equipments resource
          */
         Route::get('equipments/trashed', 'EquipmentController@trashed')->name('equipments.trashed');
+        Route::post('equipments/{equipment}', 'EquipmentController@restore')->name('equipments.restore');
         Route::resource('equipments', 'EquipmentController');
+        Route::delete('equipments/{equipment}/delete', 'EquipmentController@destroy')->name('equipments.destroy');
         Route::delete('equipments/{equipment}', 'EquipmentController@trash')->name('equipments.trash');
     });
 });

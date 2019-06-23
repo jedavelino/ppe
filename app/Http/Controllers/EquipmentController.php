@@ -112,7 +112,9 @@ class EquipmentController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //
+        $equipment = Equipment::where('id', $id)->forceDelete();
+
+        return redirect()->back()->withStatus("Equipment has been successfully deleted!");
     }
 
     public function trash(Request $request, $id) {
@@ -139,5 +141,11 @@ class EquipmentController extends Controller
         return view('equipment.trash', [
             "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
         ]);
+    }
+
+    public function restore(Request $request, $id)
+    {
+        Equipment::withTrashed()->where('id', $id)->restore();
+        return redirect()->back()->withStatus("Equipment successfully restored!");
     }
 }

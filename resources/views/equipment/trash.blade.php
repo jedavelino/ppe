@@ -75,10 +75,13 @@
 							<td>{{ $item->name }}</td>
 							<td>{{ $item->description }}</td>
 							<td>
-								<a class="btn btn-sm btn-secondary" href="{{ route('admin.equipments.show', $item->id) }}">
-									Restore
-								</a>
-								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.trashed', $item->id) }}">
+								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.restore', $item->id) }}">
+									@csrf
+									<button class="btn btn-sm btn-secondary">
+										Restore
+									</button>
+								</form>
+								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.destroy', $item->id) }}">
 									@csrf
 									@method('DELETE')
 									<button class="btn btn-sm btn-danger">
