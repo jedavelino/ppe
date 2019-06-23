@@ -18,17 +18,17 @@ class EquipmentController extends Controller
      */
     public function index(Request $request)
     {
-        $equipmentsQuery = Equipment::query();
+        $request->flashOnly('search');
 
-        if ($order = $request->order) {
-            $equipmentsQuery->orderBy($order, 'asc');
-        }
+        $equipmentsQuery = Equipment::query();
 
         if ($search = $request->search) {
             $equipmentsQuery->where('name', 'like', "%{$search}%");
         }
 
-        // $equipments = Equipment::paginate(15);
+        if ($order = $request->order) {
+            $equipmentsQuery->orderBy($order, 'asc');
+        }
 
         return view('equipment.index', [
             "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
@@ -120,5 +120,24 @@ class EquipmentController extends Controller
 
         return redirect()->route('admin.equipments.index')
             ->withStatus("Equipment successfully trashed!");
+    }
+
+    public function trashed(Request $request)
+    {
+        $request->flashOnly('search');
+
+        $equipmentsQuery = Equipment::onlyTrashed();
+
+        if ($order = $request->order) {
+            $equipmentsQuery->orderBy($order, 'asc');
+        }
+
+        if ($search = $request->search) {
+            $equipmentsQuery->where('name', 'like', "%{$search}%");
+        }
+
+        return view('equipment.trash', [
+            "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
+        ]);
     }
 }

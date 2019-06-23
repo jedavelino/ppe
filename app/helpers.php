@@ -3,8 +3,8 @@
  * Helper functions
  */
 
-if (! function_exists('_countPerPage')) {
-	function _countPerPage($equipments)
+if (! function_exists('_countPerPageTotal')) {
+	function _countPerPageTotal($equipments)
 	{
 		if ($equipments->currentPage() === $equipments->lastPage()) {
 			return $equipments->total();

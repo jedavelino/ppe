@@ -18,7 +18,6 @@
 				
 				<div class="d-flex align-items-center">
 					<h3 class="mb-0">Equipments</h3>
-					<a class="btn btn-outline-primary ml-4" href="{{ route('admin.equipments.create') }}">Add New</a>
 				</div>
 
 				<div class="mt-4 d-flex align-items-center justify-content-between">
@@ -32,7 +31,7 @@
 							</li>
 						</ul>
 					</div>
-					<form class="form-inline" method="GET" action={{ route('admin.equipments.index', request()->search) }}>
+					<form class="form-inline" method="GET" action="{{ route('admin.equipments.trashed', request()->search) }}">
 						<div class="form-group">
 							<label for="search" class="sr-only">Search</label>
 							<input type="search" class="form-control form-control-sm" id="search" name="search" value="{{ old('search') }}" placeholder="Search...">
@@ -42,7 +41,7 @@
 				</div>
 
 				<div class="d-flex align-items-center justify-content-between mt-2">
-					<form class="form-inline" method="GET" action="{{ route('admin.equipments.index', [
+					<form class="form-inline" method="GET" action="{{ route('admin.equipments.trashed', [
 						'order' => request()->order,
 						'search' => request()->search,
 					]) }}">
@@ -77,16 +76,13 @@
 							<td>{{ $item->description }}</td>
 							<td>
 								<a class="btn btn-sm btn-secondary" href="{{ route('admin.equipments.show', $item->id) }}">
-									View
+									Restore
 								</a>
-								<a class="btn btn-sm btn-success" href="{{ route('admin.equipments.edit', $item->id) }}">
-									Edit
-								</a>
-								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.trash', $item->id) }}">
+								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.trashed', $item->id) }}">
 									@csrf
 									@method('DELETE')
 									<button class="btn btn-sm btn-danger">
-										Trash
+										Delete
 									</button>
 								</form>
 							</td>
