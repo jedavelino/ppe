@@ -22,13 +22,22 @@ class EquipmentController extends Controller
 
         $equipmentsQuery = Equipment::query();
 
+        if ($request->status && $request->status === 'trashed') {
+            $equipmentsQuery = Equipment::onlyTrashed();
+        }
+
+        $order = $request->order ? $request->order : 'asc';
+        $orderBy = $request->orderby ? $request->orderby : 'created_at';
+
+        $equipmentsQuery->orderBy($orderBy, $order);
+
         if ($search = $request->search) {
             $equipmentsQuery->where('name', 'like', "%{$search}%");
         }
 
-        if ($order = $request->order) {
-            $equipmentsQuery->orderBy($order, 'asc');
-        }
+        // if ($orderby = $request->orderby) {
+        //     $equipmentsQuery->orderBy($orderby, $order);
+        // }
 
         return view('equipment.index', [
             "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),

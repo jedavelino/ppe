@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-{{-- {{ dd($equipments) }} --}}
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -18,7 +16,14 @@
 				
 				<div class="d-flex align-items-center">
 					<h3 class="mb-0">Equipments</h3>
-					<a class="btn btn-outline-primary ml-4" href="{{ route('admin.equipments.create') }}">Add New</a>
+					{{-- <a class="btn btn-outline-primary ml-4" href="{{ route('admin.equipments.create') }}">Add New</a> --}}
+					<div class="btn-group ml-4" role="group">
+						<button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</button>
+						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+							<a class="dropdown-item" href="{{ route('admin.equipments.create') }}">Equipment</a>
+							<a class="dropdown-item" href="{{ route('admin.equipments.create') }}">Categories</a>
+						</div>
+					</div>
 				</div>
 
 				<div class="mt-4 d-flex align-items-center justify-content-between">
@@ -28,7 +33,7 @@
 								<a class="nav-link active" href="{{ route('admin.equipments.index') }}">All</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link " href="{{ route('admin.equipments.trashed') }}">Trash</a>
+								<a class="nav-link " href="{{ route('admin.equipments.index', ['status' => 'trashed']) }}">Trash</a>
 							</li>
 						</ul>
 					</div>
@@ -43,16 +48,29 @@
 
 				<div class="d-flex align-items-center justify-content-between mt-2">
 					<form class="form-inline" method="GET" action="{{ route('admin.equipments.index', [
+						'orderby' => request()->orderby,
 						'order' => request()->order,
 						'search' => request()->search,
 					]) }}">
-						<label class="mr-2 sr-only" for="order">Order by</label>
-						<select class="custom-select custom-select-sm" id="order" name="order">
-							<option disabled selected>Select</option>
-							<option {{ request()->order === 'name' ? 'selected' : '' }} value="name">Name</option>
-							<option {{ request()->order === 'id' ? 'selected' : '' }} value="id">ID</option>
-						</select>
+						<div class="form-group">
+							<label class="mr-2 sr-only" for="orderby">Order by</label>
+							<select class="custom-select custom-select-sm" id="orderby" name="orderby">
+								<option disabled selected>Select</option>
+								<option {{ request()->orderby === 'name' ? 'selected' : '' }} value="name">Name</option>
+								<option {{ request()->orderby === 'created_at' ? 'selected' : '' }} value="created_at">Date</option>
+							</select>
+						</div>
+						<div class="form-group ml-2">
+							<label class="mr-2 sr-only" for="order">Order</label>
+							<select class="custom-select custom-select-sm" id="order" name="order">
+								<option disabled selected>Select</option>
+								<option {{ request()->order === 'asc' ? 'selected' : '' }} value="asc">ASC</option>
+								<option {{ request()->order === 'desc' ? 'selected' : '' }} value="desc">DESC</option>
+							</select>
+						</div>
+						@if (old('search'))
 						<input type="hidden" name="search" value="{{ old('search') }}">
+						@endif
 						<button type="submit" class="btn btn-sm btn-outline-secondary ml-2">Order</button>
 					</form>
 					<div>
@@ -65,7 +83,7 @@
 						<tr>
 							<th scope="col">ID</th>
 							<th scope="col">Name</th>
-							<th scope="col">Description</th>
+							<th scope="col">Date Added</th>
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
@@ -74,7 +92,7 @@
 						<tr>
 							<th scope="row">{{ $item->id }}</th>
 							<td>{{ $item->name }}</td>
-							<td>{{ $item->description }}</td>
+							<td>{{ $item->created_at->format('j-m-Y') }}</td>
 							<td>
 								<a class="btn btn-sm btn-secondary" href="{{ route('admin.equipments.show', $item->id) }}">
 									View
@@ -95,7 +113,7 @@
 					</tbody>
 				</table>
 
-				{{ $equipments->appends(request()->only(['search', 'order']))->links() }}
+				{{ $equipments->appends(request()->only(['search', 'orderby', 'order']))->links() }}
             </div>
         </div>
     </div>
