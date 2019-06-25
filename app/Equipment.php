@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\EquipmentType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,6 +16,11 @@ class Equipment extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description',
+        'name', 'type_id', 'description',
     ];
+
+    public function type() 
+    {
+        return $this->belongsTo(EquipmentType::class);
+    }
 }

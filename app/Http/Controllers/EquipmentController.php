@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Equipment;
+use App\EquipmentType;
 use App\Http\Requests\StoreEquipmentRequest;
 use App\Http\Requests\UpdateEquipmentRequest;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\DB;
 
 class EquipmentController extends Controller
 {
@@ -18,7 +20,7 @@ class EquipmentController extends Controller
      */
     public function index(Request $request)
     {
-        $request->flashOnly('search');
+        $request->flashOnly('search', 'status');
 
         $equipmentsQuery = Equipment::query();
 
@@ -38,7 +40,6 @@ class EquipmentController extends Controller
         // if ($orderby = $request->orderby) {
         //     $equipmentsQuery->orderBy($orderby, $order);
         // }
-
         return view('equipment.index', [
             "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
         ]);
@@ -51,7 +52,11 @@ class EquipmentController extends Controller
      */
     public function create()
     {
-        return view('equipment.create');
+        $types = EquipmentType::all();
+
+        return view('equipment.create', [
+            'types' => $types,
+        ]);
     }
 
     /**
@@ -105,9 +110,9 @@ class EquipmentController extends Controller
      */
     public function update(UpdateEquipmentRequest $request, $id)
     {
-        // $validated = $request->validated();
+        $validated = $request->validated();
 
-        $book = Equipment::where('id', $id)->update($request->validated());
+        $equipment = Equipment::where('id', $id)->update($validated);
         
         return redirect()->route('admin.equipments.index')->withStatus("Equipment successfully updated!");
     }
@@ -133,24 +138,24 @@ class EquipmentController extends Controller
             ->withStatus("Equipment successfully trashed!");
     }
 
-    public function trashed(Request $request)
-    {
-        $request->flashOnly('search');
+    // public function trashed(Request $request)
+    // {
+    //     $request->flashOnly('search');
 
-        $equipmentsQuery = Equipment::onlyTrashed();
+    //     $equipmentsQuery = Equipment::onlyTrashed();
 
-        if ($order = $request->order) {
-            $equipmentsQuery->orderBy($order, 'asc');
-        }
+    //     if ($order = $request->order) {
+    //         $equipmentsQuery->orderBy($order, 'asc');
+    //     }
 
-        if ($search = $request->search) {
-            $equipmentsQuery->where('name', 'like', "%{$search}%");
-        }
+    //     if ($search = $request->search) {
+    //         $equipmentsQuery->where('name', 'like', "%{$search}%");
+    //     }
 
-        return view('equipment.trash', [
-            "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
-        ]);
-    }
+    //     return view('equipment.trash', [
+    //         "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
+    //     ]);
+    // }
 
     public function restore(Request $request, $id)
     {

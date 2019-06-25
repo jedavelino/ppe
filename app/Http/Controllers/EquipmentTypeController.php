@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Equipment;
 use App\EquipmentType;
+use App\Http\Requests\StoreEquipmentTypeRequest;
+use App\Http\Requests\UpdateEquipmentTypeRequest;
 use Illuminate\Http\Request;
 
 class EquipmentTypeController extends Controller
@@ -14,7 +17,13 @@ class EquipmentTypeController extends Controller
      */
     public function index()
     {
-        return view('equipment.type.index');
+        $typeQuery = EquipmentType::query();
+
+        // dd(EquipmentType::get());
+
+        return view('equipment.type.index', [
+            "types" => $typeQuery->paginate(15),
+        ]);
     }
 
     /**
@@ -24,7 +33,7 @@ class EquipmentTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('equipment.type.create');
     }
 
     /**
@@ -33,9 +42,12 @@ class EquipmentTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEquipmentTypeRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $equipmentType = EquipmentType::firstOrCreate($validated);
+
+        return redirect()->route('admin.types.index')->withStatus("Equipment Type successfully added!");
     }
 
     /**
@@ -44,9 +56,14 @@ class EquipmentTypeController extends Controller
      * @param  \App\EquipmentType  $equipmentType
      * @return \Illuminate\Http\Response
      */
-    public function show(EquipmentType $equipmentType)
+    public function show($id)
     {
-        //
+        // $equipment = Equipment::find($id)->equipments;
+        $equipmentType = EquipmentType::findOrFail($id);
+
+        // dd($equipmentType->equipments);
+
+        return view('equipment.type.show', ["type" => $equipmentType]);
     }
 
     /**
@@ -55,9 +72,13 @@ class EquipmentTypeController extends Controller
      * @param  \App\EquipmentType  $equipmentType
      * @return \Illuminate\Http\Response
      */
-    public function edit(EquipmentType $equipmentType)
+    public function edit($id)
     {
-        //
+        $equipmentType = EquipmentType::findOrFail($id);
+
+        return view('equipment.type.edit', [
+            'type' => $equipmentType,
+        ]);
     }
 
     /**
@@ -67,9 +88,13 @@ class EquipmentTypeController extends Controller
      * @param  \App\EquipmentType  $equipmentType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EquipmentType $equipmentType)
+    public function update(UpdateEquipmentTypeRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $equipmentType = EquipmentType::where('id', $id)->update($validated);
+        
+        return redirect()->route('admin.types.index')->withStatus("{$request->name} successfully updated!");
     }
 
     /**

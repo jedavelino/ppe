@@ -16,6 +16,7 @@ class CreateEquipmentTypesTable extends Migration
         Schema::create('equipment_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

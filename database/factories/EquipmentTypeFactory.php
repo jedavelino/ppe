@@ -8,5 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(EquipmentType::class, function (Faker $faker) {
     return [
         'name' => $faker->text(10),
+        'description' => $faker->text(50),
     ];
 });

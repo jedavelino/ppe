@@ -17,8 +17,11 @@ class CreateEquipmentTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->text('description')->nullable();
+            $table->bigInteger('type_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
+
+            // $table->foreign('type_id')->references('id')->on('equipment_types');
         });
     }
 

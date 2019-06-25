@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- {{ dump($equipments) }} --}}
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -21,7 +23,7 @@
 						<button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</button>
 						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 							<a class="dropdown-item" href="{{ route('admin.equipments.create') }}">Equipment</a>
-							<a class="dropdown-item" href="{{ route('admin.equipments.create') }}">Categories</a>
+							<a class="dropdown-item" href="{{ route('admin.types.create') }}">Type</a>
 						</div>
 					</div>
 				</div>
@@ -35,13 +37,22 @@
 							<li class="nav-item">
 								<a class="nav-link " href="{{ route('admin.equipments.index', ['status' => 'trashed']) }}">Trash</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="{{ route('admin.types.index') }}">Types</a>
+							</li>
 						</ul>
 					</div>
-					<form class="form-inline" method="GET" action={{ route('admin.equipments.index', request()->search) }}>
+					<form class="form-inline" method="GET" action={{ route('admin.equipments.index', [
+						'search' => request()->search,
+						'status' => 'trashed',
+					]) }}>
 						<div class="form-group">
 							<label for="search" class="sr-only">Search</label>
 							<input type="search" class="form-control form-control-sm" id="search" name="search" value="{{ old('search') }}" placeholder="Search...">
 						</div>
+						@if (old('status'))
+						<input type="hidden" name="status" value="{{ old('status') }}">
+						@endif
 						<button type="submit" class="btn btn-sm btn-outline-dark ml-2">Search</button>
 					</form>
 				</div>
@@ -51,6 +62,7 @@
 						'orderby' => request()->orderby,
 						'order' => request()->order,
 						'search' => request()->search,
+						'status' => 'trashed',
 					]) }}">
 						<div class="form-group">
 							<label class="mr-2 sr-only" for="orderby">Order by</label>
@@ -71,6 +83,9 @@
 						@if (old('search'))
 						<input type="hidden" name="search" value="{{ old('search') }}">
 						@endif
+						@if (old('status'))
+						<input type="hidden" name="status" value="{{ old('status') }}">
+						@endif
 						<button type="submit" class="btn btn-sm btn-outline-secondary ml-2">Order</button>
 					</form>
 					<div>
@@ -83,6 +98,7 @@
 						<tr>
 							<th scope="col">ID</th>
 							<th scope="col">Name</th>
+							<th scope="col">Type</th>
 							<th scope="col">Date Added</th>
 							<th scope="col">Actions</th>
 						</tr>
@@ -92,8 +108,24 @@
 						<tr>
 							<th scope="row">{{ $item->id }}</th>
 							<td>{{ $item->name }}</td>
-							<td>{{ $item->created_at->format('j-m-Y') }}</td>
+							<td>{{ $item->type->name }}</td>
+							<td>{{ $item->created_at }}</td>
 							<td>
+								@if (old('status') === 'trashed')
+								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.restore', $item->id) }}">
+									@csrf
+									<button class="btn btn-sm btn-secondary">
+										Restore
+									</button>
+								</form>
+								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.destroy', $item->id) }}">
+									@csrf
+									@method('DELETE')
+									<button class="btn btn-sm btn-danger">
+										Delete
+									</button>
+								</form>
+								@else
 								<a class="btn btn-sm btn-secondary" href="{{ route('admin.equipments.show', $item->id) }}">
 									View
 								</a>
@@ -107,13 +139,14 @@
 										Trash
 									</button>
 								</form>
+								@endif
 							</td>
 						</tr>
 						@endforeach
 					</tbody>
 				</table>
 
-				{{ $equipments->appends(request()->only(['search', 'orderby', 'order']))->links() }}
+				{{ $equipments->appends(request()->only(['search', 'orderby', 'order', 'status']))->links() }}
             </div>
         </div>
     </div>
