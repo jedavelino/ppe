@@ -108,7 +108,7 @@
 						<tr>
 							<th scope="row">{{ $item->id }}</th>
 							<td>{{ $item->name }}</td>
-							<td>{{ $item->type->name }}</td>
+							<td>{{ $item->type ? $item->type->name : null }}</td>
 							<td>{{ $item->created_at }}</td>
 							<td>
 								@if (old('status') === 'trashed')

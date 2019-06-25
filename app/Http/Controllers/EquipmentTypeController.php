@@ -103,8 +103,11 @@ class EquipmentTypeController extends Controller
      * @param  \App\EquipmentType  $equipmentType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EquipmentType $equipmentType)
+    public function destroy($id)
     {
-        //
+        $equipmentType = EquipmentType::destroy($id);
+
+        return redirect()->back()
+            ->withStatus("Equipment Type successfully deleted!");
     }
 }

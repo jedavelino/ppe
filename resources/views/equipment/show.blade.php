@@ -17,6 +17,12 @@
 						</div>
 					</div>
 					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="name">Type:</label>
+						<div class="col-sm-10">
+							<input readonly type="text" class="form-control-plaintext" id="name" name="name" value="{{ $equipment->type ? $equipment->type->name : null }}">
+						</div>
+					</div>
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="description">Description:</label>
 						<div class="col-sm-10">
 							<textarea readonly class="form-control-plaintext" id="description" name="description" rows="4">{{ $equipment->description }}</textarea>

@@ -45,7 +45,7 @@
 								<a class="btn btn-sm btn-success" href="{{ route('admin.types.edit', $item->id) }}">
 									Edit
 								</a>
-								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.trash', $item->id) }}">
+								<form class="d-inline-block" method="POST" action="{{ route('admin.types.destroy', $item->id) }}">
 									@csrf
 									@method('DELETE')
 									<button class="btn btn-sm btn-danger">
