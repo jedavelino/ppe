@@ -85,7 +85,9 @@ class EquipmentController extends Controller
     {
         $equipment = Equipment::findOrFail($id);
 
-        return view('equipment.show', ["equipment" => $equipment]);
+        return view('equipment.show', [
+            "equipment" => $equipment,
+        ]);
     }
 
     /**
@@ -97,8 +99,12 @@ class EquipmentController extends Controller
     public function edit($id)
     {
         $equipment = Equipment::findOrFail($id);
+        $types = EquipmentType::all();
 
-        return view('equipment.edit')->with('equipment', $equipment);
+        return view('equipment.edit', [
+            "equipment" => $equipment,
+            "types" => $types,
+        ]);
     }
 
     /**

@@ -26,6 +26,7 @@ class UpdateEquipmentRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'description' => 'nullable',
+            'type_id' => 'required|integer',
         ];
     }
 }

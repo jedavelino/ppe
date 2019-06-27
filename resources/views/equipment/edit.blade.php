@@ -31,6 +31,20 @@
 						</div>
 					</div>
 					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="type">Type</label>
+						<div class="col-sm-10">
+							<select class="form-control" name="type_id" id="type">
+								@foreach ($types as $option)
+								@if ($equipment->type)
+								<option value="{{ $option->id }}" {{ $option->id === $equipment->type->id ? 'selected' : '' }}>{{ $option->name }}</option>
+								@else
+								<option value="{{ $option->id }}">{{ $option->name }}</option>
+								@endif
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="description">Description</label>
 						<div class="col-sm-10">
 							<textarea class="form-control" id="description" name="description" rows="4">{{ $equipment->description }}</textarea>
