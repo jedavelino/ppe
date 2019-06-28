@@ -1,12 +1,10 @@
 @extends('layouts.app')
 
-{{-- {{ dump($equipments) }} --}}
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="p-4 bg-white shadow-sm">
+<section>
+    <div class="container">
+        <div class="">
+            <div class="">
 				@if (session('status'))
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						{{ session('status') }}
@@ -16,9 +14,8 @@
 					</div>
 				@endif
 				
-				<div class="d-flex align-items-center">
+				<div class="d-flex align-items-center hidden">
 					<h3 class="mb-0">Equipments</h3>
-					{{-- <a class="btn btn-outline-primary ml-4" href="{{ route('admin.equipments.create') }}">Add New</a> --}}
 					<div class="btn-group ml-4" role="group">
 						<button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</button>
 						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -28,7 +25,7 @@
 					</div>
 				</div>
 
-				<div class="mt-4 d-flex align-items-center justify-content-between">
+				<div class="mt-4 d-flex align-items-center justify-content-between hidden">
 					<div class="d-flex">
 						<ul class="nav">
 							<li class="nav-item">
@@ -57,7 +54,7 @@
 					</form>
 				</div>
 
-				<div class="d-flex align-items-center justify-content-between mt-2">
+				<div class="d-flex align-items-center justify-content-between mt-2 hidden">
 					<form class="form-inline" method="GET" action="{{ route('admin.equipments.index', [
 						'orderby' => request()->orderby,
 						'order' => request()->order,
@@ -93,49 +90,49 @@
 					</div>
 				</div>
 
-				<table class="table table-sm mt-3">
-					<thead>
+				<table class="w-full">
+					<thead class="bg-gray-200">
 						<tr>
-							<th scope="col">ID</th>
-							<th scope="col">Name</th>
-							<th scope="col">Type</th>
-							<th scope="col">Date Added</th>
-							<th scope="col">Actions</th>
+							<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left" scope="col">ID</th>
+							<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left" scope="col">Name</th>
+							<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left" scope="col">Type</th>
+							<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left" scope="col">Date Added</th>
+							<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left" scope="col">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach ($equipments as $item)
 						<tr>
-							<th scope="row">{{ $item->id }}</th>
-							<td>{{ $item->name }}</td>
-							<td>{{ $item->type ? $item->type->name : null }}</td>
-							<td>{{ $item->created_at }}</td>
-							<td>
+							<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->id }}</td>
+							<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->name }}</td>
+							<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->type ? $item->type->name : null }}</td>
+							<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->created_at }}</td>
+							<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">
 								@if (old('status') === 'trashed')
-								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.restore', $item->id) }}">
+								<form class="inline-block" method="POST" action="{{ route('admin.equipments.restore', $item->id) }}">
 									@csrf
-									<button class="btn btn-sm btn-secondary">
+									<button class="bg-gray-300 font-medium inline-block px-2 py-1 rounded text-gray-800 text-xs">
 										Restore
 									</button>
 								</form>
-								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.destroy', $item->id) }}">
+								<form class="inline-block" method="POST" action="{{ route('admin.equipments.destroy', $item->id) }}">
 									@csrf
 									@method('DELETE')
-									<button class="btn btn-sm btn-danger">
+									<button class="bg-red-400 font-medium inline-block px-2 py-1 rounded text-white text-xs">
 										Delete
 									</button>
 								</form>
 								@else
-								<a class="btn btn-sm btn-secondary" href="{{ route('admin.equipments.show', $item->id) }}">
+								<a class="bg-gray-300 font-medium inline-block px-2 py-1 rounded text-gray-800 text-xs" href="{{ route('admin.equipments.show', $item->id) }}">
 									View
 								</a>
-								<a class="btn btn-sm btn-success" href="{{ route('admin.equipments.edit', $item->id) }}">
+								<a class="bg-green-300 font-medium inline-block px-2 py-1 rounded text-green-800 text-xs" href="{{ route('admin.equipments.edit', $item->id) }}">
 									Edit
 								</a>
-								<form class="d-inline-block" method="POST" action="{{ route('admin.equipments.trash', $item->id) }}">
+								<form class="inline-block" method="POST" action="{{ route('admin.equipments.trash', $item->id) }}">
 									@csrf
 									@method('DELETE')
-									<button class="btn btn-sm btn-danger">
+									<button class="bg-red-300 font-medium inline-block px-2 py-1 rounded text-red-800 text-xs">
 										Trash
 									</button>
 								</form>
@@ -150,5 +147,5 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection
