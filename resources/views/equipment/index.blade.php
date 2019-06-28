@@ -3,8 +3,6 @@
 @section('content')
 <section>
     <div class="container">
-        <div class="">
-            <div class="">
 				@if (session('status'))
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						{{ session('status') }}
@@ -17,10 +15,6 @@
 				<div class="flex items-center justify-between">
 					<h3 class="font-medium text-2xl text-gray-800">Equipments</h3>
 					<a class="bg-blue-200 border border-blue-300 font-medium leading-snug px-4 py-2 rounded text-blue-700 text-sm" href="{{ route('admin.equipments.create') }}">Add New</a>
-				</div>
-
-				<div class="hidden">
-					Showing {{ _countPerPageTotal($equipments) }} out of {{ $equipments->total() }}
 				</div>
 				
 				<div class="bg-white shadow rounded mt-6">
@@ -117,11 +111,11 @@
 					<table class="w-full">
 						<thead>
 							<tr>
-								<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">ID</th>
-								<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Name</th>
-								<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Type</th>
-								<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Date Added</th>
-								<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Actions</th>
+								<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">ID</th>
+								<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Name</th>
+								<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Type</th>
+								<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Date Added</th>
+								<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -169,8 +163,6 @@
 				</div>
 
 				{{ $equipments->appends(request()->only(['search', 'orderby', 'order', 'status']))->links() }}
-            </div>
-        </div>
     </div>
 </section>
 @endsection

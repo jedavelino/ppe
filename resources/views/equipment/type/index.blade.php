@@ -14,30 +14,30 @@
 								</div>
 							@endif
 				
-							<div class="d-flex align-items-center hidden">
-								<h3 class="mb-0">Equipment Types</h3>
-								<a class="btn btn-outline-primary ml-4" href="{{ route('admin.types.create') }}">Add New</a>
+							<div class="flex items-center justify-between">
+								<h3 class="font-medium text-2xl text-gray-800">Equipment Types</h3>
+								<a class="bg-blue-200 border border-blue-300 font-medium leading-snug px-4 py-2 rounded text-blue-700 text-sm" href="{{ route('admin.types.create') }}">Add New</a>
 							</div>
 							
-							<div class="bg-white">
+							<div class="bg-white shadow rounded mt-6">
 								<table class="w-full">
 									<thead>
 										<tr>
-											<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">ID</th>
-											<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Name</th>
-											<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Count</th>
-											<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Date Added</th>
-											<th class="py-2 px-4 font-bold text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Actions</th>
+											<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">ID</th>
+											<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Name</th>
+											<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Count</th>
+											<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Date Added</th>
+											<th class="py-2 px-4 font-bold border-t text-xs text-gray-700 uppercase text-left bg-gray-200" scope="col">Actions</th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach ($types as $item)
 										<tr>
-											<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->id }}</td>
-											<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->name }}</td>
-											<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->equipments->count() }}</td>
-											<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">{{ $item->created_at }}</td>
-											<td class="py-2 px-4 text-gray-800 border-t font-medium text-sm">
+											<td class="py-2 px-4 text-gray-800 border-t font-medium text-xs">{{ $item->id }}</td>
+											<td class="py-2 px-4 text-gray-800 border-t font-medium text-xs">{{ $item->name }}</td>
+											<td class="py-2 px-4 text-gray-800 border-t font-medium text-xs">{{ $item->equipments->count() }}</td>
+											<td class="py-2 px-4 text-gray-800 border-t font-medium text-xs">{{ $item->created_at }}</td>
+											<td class="py-2 px-4 text-gray-800 border-t font-medium text-xs">
 												<a class="bg-gray-300 font-medium inline-block px-2 py-1 rounded text-gray-800 text-xs" href="{{ route('admin.types.show', $item->id) }}">
 													View
 												</a>
