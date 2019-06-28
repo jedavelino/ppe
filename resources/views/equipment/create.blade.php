@@ -4,7 +4,7 @@
 <section>
     <div class="container">
 				@if ($errors->any())
-					<div class="alert alert-danger">
+					<div class="bg-red-200 border border-red-300 font-medium mb-6 px-4 py-3 rounded text-red-700 text-sm">
 						<ul>
 							@foreach ($errors->all() as $error)
 								<li>{{ $error }}</li>
@@ -22,6 +22,9 @@
 							<div class="w-1/2 px-4 mt-4">
 								<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">Name</label>
 								<input type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="name" name="name">
+								@error('name')
+									<span class="text-xs text-red-500">{{ $message }}</span>
+								@enderror
 							</div>
 							<div class="w-1/2 px-4 mt-4">
 								<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="type">Type</label>

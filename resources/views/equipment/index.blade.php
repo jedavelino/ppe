@@ -4,11 +4,11 @@
 <section>
     <div class="container">
 				@if (session('status'))
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<div class="bg-green-200 border border-green-300 font-medium mb-6 px-4 py-3 rounded text-green-700 text-sm" role="alert">
 						{{ session('status') }}
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						{{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
-						</button>
+						</button> --}}
 					</div>
 				@endif
 				
