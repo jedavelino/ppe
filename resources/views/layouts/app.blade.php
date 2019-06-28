@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="antialiased">
+<body class="antialiased bg-gray-100">
     <div id="app">
         @include('layouts.header')
 

@@ -1,6 +1,6 @@
 <site-header inline-template>
-	<header>
-		<nav class="px-10 py-3 flex items-center justify-between shadow">
+	<header class="bg-white shadow">
+		<nav class="px-10 py-3 flex items-center justify-between">
 			<a class="text-xl font-medium inline-block" href="{{ url('/') }}">
 				{{ config('app.name', 'Laravel') }}
 			</a>
