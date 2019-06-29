@@ -160,9 +160,11 @@
 							@endforeach
 						</tbody>
 					</table>
-				</div>
 
-				{{ $equipments->appends(request()->only(['search', 'orderby', 'order', 'status']))->links() }}
+					<div class="px-4 border-t py-4 bg-gray-200">
+						{{ $equipments->appends(request()->only(['search', 'orderby', 'order', 'status']))->links() }}
+					</div>
+				</div>
     </div>
 </section>
 @endsection
