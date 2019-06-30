@@ -20,9 +20,10 @@ class EquipmentController extends Controller
      */
     public function index(Request $request)
     {
-        $request->flashOnly('search', 'status');
+        $request->flashOnly('search', 'status', 'type');
 
         $equipmentsQuery = Equipment::query();
+        $equipmentTypes = EquipmentType::all();
 
         if ($request->status && $request->status === 'trashed') {
             $equipmentsQuery = Equipment::onlyTrashed();
@@ -37,11 +38,20 @@ class EquipmentController extends Controller
             $equipmentsQuery->where('name', 'like', "%{$search}%");
         }
 
+        if ($type = $request->type) {
+            if ($type === 'all') {
+                $equipmentsQuery = Equipment::query();
+            } else {
+                $equipmentsQuery->where('type_id', $type);
+            }
+        }
+
         // if ($orderby = $request->orderby) {
         //     $equipmentsQuery->orderBy($orderby, $order);
         // }
         return view('equipment.index', [
             "equipments" => $equipmentsQuery->paginate($this->itemsPerPage),
+            'types' => $equipmentTypes,
         ]);
     }
 
@@ -52,10 +62,10 @@ class EquipmentController extends Controller
      */
     public function create()
     {
-        $types = EquipmentType::all();
+        $equipmentTypes = EquipmentType::all();
 
         return view('equipment.create', [
-            'types' => $types,
+            'types' => $equipmentTypes,
         ]);
     }
 

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- {{ dump($types) }} --}}
+
 @section('content')
 <section>
     <div class="container">
@@ -58,23 +60,22 @@
 							</form>
 
 							<form class="flex items-center ml-4" method="GET" action="{{ route('admin.equipments.index', [
-								'orderby' => request()->orderby,
-								'order' => request()->order,
-								'search' => request()->search,
-								'status' => 'trashed',
+								'type' => request()->type,
 							]) }}">
 								<div class="flex items-center ">
 									<div class="relative">
-										<select class="block text-xs font-medium appearance-none w-full bg-gray-100 border border-gray-200 rounded text-gray-600 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="orderby" name="orderby">
-											<option {{ request()->orderby === 'name' ? 'selected' : '' }} value="name" selected>All Types</option>
-											<option {{ request()->orderby === 'created_at' ? 'selected' : '' }} value="created_at">Diabetes</option>
+										<select class="block text-xs font-medium appearance-none w-full bg-gray-100 border border-gray-200 rounded text-gray-600 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="type" name="type">
+											<option value="all">All Types</option>
+											@foreach ($types as $option)
+											<option value="{{ $option->id }}" {{ $option->id == request()->type ? 'selected' : '' }}>{{ $option->name }}</option>
+											@endforeach
 										</select>
 										<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 												<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
 										</div>
 									</div>
 								</div>
-								<div class="flex items-center ml-1">
+								{{-- <div class="flex items-center ml-1">
 									<div class="relative">
 										<select class="block text-xs font-medium appearance-none w-full bg-gray-100 border border-gray-200 rounded text-gray-600 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="orderby" name="orderby">
 											<option {{ request()->orderby === 'name' ? 'selected' : '' }} value="name" selected>All Locations</option>
@@ -84,7 +85,7 @@
 												<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
 										</div>
 									</div>
-								</div>
+								</div> --}}
 								@if (old('search'))
 								<input type="hidden" name="search" value="{{ old('search') }}">
 								@endif
